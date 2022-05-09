@@ -20,6 +20,8 @@ gcloud iam service-accounts create $ACCOUNT_NAME \
 ```
 
 ```
+# Confirm service account inherits these roles by default
+
 gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member=serviceAccount:$ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com \
   --role=roles/run.admin
