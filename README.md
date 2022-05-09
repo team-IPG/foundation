@@ -5,7 +5,7 @@ foundational artifacts and design materials for the platform
 # gcp setup
 
 ```
-export PROJECT_ID=ipg-team
+export PROJECT_ID=team-ipg
 export ACCOUNT_NAME=ipg-service-account
 ```
 
