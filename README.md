@@ -10,6 +10,10 @@ export ACCOUNT_NAME=ipg-service-account
 ```
 
 ```
+gcloud auth login
+```
+
+```
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com containerregistry.googleapis.com
 ```
 
