@@ -144,9 +144,10 @@ jobs:
       uses: 'google-github-actions/deploy-cloudrun@v0'
       with:
         image: "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
-        service: '$SERVICE_NAME'
+        service: '${{ env.SERVICE_NAME }}'
+        region: '${{ env.REGION }}'
+        env_vars: 'NAME="Hello World"'
     
-          
     - name: 'Use output'
       run: 'curl "${{ steps.deploy.outputs.url }}"'
       
