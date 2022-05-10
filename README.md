@@ -116,7 +116,7 @@ on:
     
 env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }}
-  RUN_REGION: us-central1
+  RUN_REGION: us-central1 
   SERVICE_NAME: my-service
   
 jobs:
@@ -145,8 +145,8 @@ jobs:
       with:
         image: "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
         service: '${{ env.SERVICE_NAME }}'
-        region: '${{ env.REGION }}'
-        env_vars: 'NAME="Hello World"'
+        region: '${{ env.RUN_REGION }}'
+        env_vars: 'NAME="test"'
     
     - name: 'Use output'
       run: 'curl "${{ steps.deploy.outputs.url }}"'
