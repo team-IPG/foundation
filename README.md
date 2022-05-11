@@ -112,47 +112,67 @@ Add the following secrets to your repository's secrets:
 ```yaml
 name: Build and Deploy to Cloud Run
 
-
 on:
   push:
     branches:
-    - master
-    
+      - main
+
 env:
-  PROJECT_ID: ${{ secrets.RUN_PROJECT }}
-  RUN_REGION: us-central1 
-  SERVICE_NAME: my-service
-  
+  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+  REGION: us-central1
+  SERVICE: name-svc
+  ARTIFACT: name-svc.jar
+  MIN_INSTANCES: 1
+  MEMORY: 512Mi
+
 jobs:
   setup-build-deploy:
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v0'
-      with:
-        credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-    # Build and push image to Google Container Registry
-    - name: Build
-      run: |-
-        gcloud builds submit \
-          --quiet \
-          --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
-          
-    - name: 'Deploy to Cloud Run'
-      uses: 'google-github-actions/deploy-cloudrun@v0'
-      with:
-        image: "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
-        service: '${{ env.SERVICE_NAME }}'
-        region: '${{ env.RUN_REGION }}'
-        env_vars: 'NAME="test"'
-    
-    - name: 'Use output'
-      run: 'curl "${{ steps.deploy.outputs.url }}"'
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: 'adopt'
+
+      - name: Assemble with Gradle
+        run: ./gradlew assemble
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker
+
+      - name: Build and Push Container
+        run: |-
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} --build-arg=JAR_FILE=build/libs/${{ env.ARTIFACT }} .
+          docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        run: |-
+          gcloud run deploy ${{ env.SERVICE }} \
+            --region ${{ env.REGION }} \
+            --allow-unauthenticated \
+            --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
+            --memory ${{ env.MEMORY }} \
+            --min-instances ${{ env.MIN_INSTANCES }} \
+            --platform "managed" \
       
 ```
