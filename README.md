@@ -22,6 +22,8 @@ gcloud auth login
 
 ```
 gcloud projects create $PROJECT_ID
+
+gcloud config set project $PROJECT_ID
 ```
 
 5. Enable Cloud Build, Cloud Run and Container Registry APIs
