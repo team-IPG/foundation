@@ -1,0 +1,38 @@
+===================
+#Its_Pronounced_GIF
+===================
+
+================
+#DATABASE
+================
+CREATE DATABASE hr_name_db ;
+
+================
+#SCHEMA & TABLE
+================
+CREATE SCHEMA HR_NAME_SCHEMA
+               CREATE TABLE HR_NAME_DETAIL(
+                   UID 							UUID NOT NULL,
+		   EMP_ID 						TEXT NOT NULL,  yes, ad-ent
+                   EMP_NAME_TITLE 					TEXT NOT NULL,  no
+                   EMP_NAME_FIRST 					TEXT NOT NULL,  yes
+                   EMP_NAME_MIDDLE 					TEXT NOT NULL,  no
+                   EMP_NAME_LAST 					TEXT NOT NULL,  yes
+                   EMP_NAME_PREFERRED 					TEXT NOT NULL,   yes , customize the name, nick name, phonetially modified, 
+		   EMP_NAME_PREFERRED_PHONETICS				TEXT NOT NULL,   no
+		   EMP_NAME_PREFERRED_VOICE_PRONOUNCE_NATIVE_STYLE	TEXT NOT NULL,   :preferred country , 
+												preferred speed
+												preferred gender/ binary / non binary
+		   EMP_NAME_PREFERRED_VOICE_PRONOUNCE_SOURCE		TEXT NOT NULL,     no , user can adjust the text to customize the name pronounciation
+		   EMP_NAME_PREFERRED_VOICE_PRONOUNCE_LINK		TEXT NOT NULL,
+		   EMP_NAME_ACTIVE_STATUS_IND				TEXT NOT NULL,
+		   CREATED_DATE						DATE NOT NULL,
+		   CREATED_TIME						TIME NOT NULL,
+		   UPDATED_DATE						DATE NOT NULL,
+		   UPDATED_TIME						TIME NOT NULL
+
+                   PRIMARY KEY (UUID)
+		   );
+
+
+
