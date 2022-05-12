@@ -11,7 +11,7 @@ CREATE DATABASE hr_name_db ;
 #SCHEMA & TABLE
 ================
 CREATE SCHEMA HR_NAME_SCHEMA
-        CREATE TABLE HR_NAME_DETAIL(
+        CREATE TABLE EMPLOYEE (
 		   	EMP_ID 						TEXT NOT NULL UNIQUE,
             EMP_NAME_FIRST 					TEXT NOT NULL,  yes
             EMP_NAME_LAST 					TEXT NOT NULL,  yes
@@ -20,11 +20,24 @@ CREATE SCHEMA HR_NAME_SCHEMA
 			PREFERRED_VOICE_SPEED			INT NOT NULL,  
 			PREFERRED_VOICE_GENDER			TEXT NOT NULL, 			  
 		   	VOICE_LINK						TEXT NOT NULL,
-		   	ACTIVE_IND						BOOLEAN NOT NULL,
-		   	CREATE_DTTM						DATE NOT NULL,
-		   	UPDATE_DTTM						DATE NOT NULL,
+		   	ACTIVE							BOOLEAN NOT NULL,
+		   	CREATE_DTTM						TIMESTAMP NOT NULL,
+		   	UPDATE_DTTM						TIMESTAMP NOT NULL,
             PRIMARY KEY (EMP_ID)
 		);
 
 
 
+CREATE TABLE IF NOT EXISTS employee
+(
+    id          	VARCHAR(100) AS IDENTITY PRIMARY KEY,
+    first_name      VARCHAR(200),
+    last_name  		VARCHAR(200),
+	preferred_name 	VARCHAR(200),
+	voice_country	VARCHAR(200),
+	voice_speed		INTEGER NOT NULL,
+	voice_gender	VARCHAR(200),
+	voice_link		VARCHAR(500),
+    created    		TIMESTAMP NOT NULL,
+    updated   		TIMESTAMP NOT NULL
+);
