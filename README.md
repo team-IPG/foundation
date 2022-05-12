@@ -8,7 +8,7 @@ foundational artifacts and design materials for the platform
 1. Define project and service account names
 
 ```
-export PROJECT_ID=team-ipg
+export PROJECT_ID=team-ipg-wf
 export ACCOUNT_NAME=ipg-service-account
 ```
 
