@@ -28,16 +28,15 @@ CREATE SCHEMA HR_NAME_SCHEMA
 
 
 
-CREATE TABLE IF NOT EXISTS employee
-(
-    id          	VARCHAR(100) AS IDENTITY PRIMARY KEY,
-    first_name      VARCHAR(200),
-    last_name  		VARCHAR(200),
-	preferred_name 	VARCHAR(200),
-	voice_country	VARCHAR(200),
-	voice_speed		INTEGER NOT NULL,
-	voice_gender	VARCHAR(200),
-	voice_link		VARCHAR(500),
-    created    		TIMESTAMP NOT NULL,
-    updated   		TIMESTAMP NOT NULL
-);
+      CREATE TABLE IF NOT EXISTS employee_test
+      (
+          id          	        VARCHAR(100) PRIMARY KEY,
+          first_name            VARCHAR(200) NOT NULL,
+          last_name  		    VARCHAR(200) NOT NULL,
+      	  preferred_name 	    VARCHAR(200),
+      	  preferred_style	    VARCHAR(200) NOT NULL,
+      	  preferred_speed	    INTEGER NOT NULL,
+      	  voice_link		    VARCHAR(500) NOT NULL,
+          created    		    TIMESTAMP NOT NULL,
+          updated   		    TIMESTAMP NOT NULL
+      );
