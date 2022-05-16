@@ -1,0 +1,4 @@
+INSERT INTO employee_test VALUES ('Donald-Trump', 'Donald', 'Trump', 'Don', 'USA', '2', 'https://storage.cloud.google.com/voice_bucket_ipg/don.mp3', '2022-05-15', '2022-05-15','t','0' );
+INSERT INTO employee_test VALUES ('Barbara-Bush', 'Barbara', 'Bush', 'Barbara', 'USA', '3', 'https://storage.cloud.google.com/voice_bucket_ipg/barbara.mp3', '2022-05-15', '2022-05-15','t','0' );
+INSERT INTO employee_test VALUES ('Sarah-Parker', 'Sarah', 'Parker', 'Saa-raa', 'USA', '3', 'https://storage.cloud.google.com/voice_bucket_ipg/saara.mp3', '2022-05-15', '2022-05-15','t','0' );
+INSERT INTO employee_test VALUES ('Angelina-Jolie', 'Angelina', 'Jolie', 'Angel', 'USA', '3', 'https://storage.cloud.google.com/voice_bucket_ipg/angel.mp3', '2022-05-15', '2022-05-15','t','0' );
