@@ -120,11 +120,12 @@ Add the following secrets to your repository's secrets:
 
 - `GCP_SA_KEY`: the downloaded service account key json
 
-## Usage
+## Example Usage
 
 ```yaml
 name: Build and Deploy to Cloud Run
 
+# Perform CICD only on push to main branch
 on:
   push:
     branches:
@@ -135,7 +136,7 @@ env:
   REGION: us-central1
   SERVICE: name-svc
   ARTIFACT: name-svc.jar
-  MIN_INSTANCES: 1
+  MIN_INSTANCES: 2
   MEMORY: 512Mi
 
 jobs:
@@ -145,7 +146,7 @@ jobs:
 
     # Add "id-token" with the intended permissions.
     permissions:
-      contents: 'read'
+      contents: 'write'
       id-token: 'write'
 
     steps:
@@ -158,13 +159,36 @@ jobs:
           java-version: 17
           distribution: 'adopt'
 
-      - name: Assemble with Gradle
-        run: ./gradlew assemble
-
+      # Setup GCP Auth (used by app unit/integration tests and GCP build/deploy steps
       - id: 'auth'
         uses: 'google-github-actions/auth@v0'
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      # Use the gradle-build-action which caches by default
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Assemble JAR
+        run: ./gradlew build
+
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+
+      - name: Commit and push JaCoCo badge (if changed)
+        uses: EndBug/add-and-commit@v7
+        with:
+          default_author: github_actions
+          message: 'commit badge'
+          add: '*.svg'
+
+      - name: Upload JaCoCo coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: jacoco-report
+          path: build/reports/jacoco/test/html/
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
@@ -187,5 +211,5 @@ jobs:
             --memory ${{ env.MEMORY }} \
             --min-instances ${{ env.MIN_INSTANCES }} \
             --platform "managed" \
-      
+        # --quiet
 ```
