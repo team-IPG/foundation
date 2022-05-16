@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "c98c7829-bbf4-438e-8ada-74fd2816cf12",
+		"name": "IPG",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get-user-local",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/employee/John-Glynn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"employee",
+						"John-Glynn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-user-GCP",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://name-svc-mh6ib2ntwq-uc.a.run.app/employee/John-Glynn",
+					"protocol": "https",
+					"host": [
+						"name-svc-mh6ib2ntwq-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"employee",
+						"John-Glynn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-all-user-GCP",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://name-svc-mh6ib2ntwq-uc.a.run.app/employee/",
+					"protocol": "https",
+					"host": [
+						"name-svc-mh6ib2ntwq-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"employee",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "find-user-local",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/findEmployee/jo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"findEmployee",
+						"jo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "find-user-GCP",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://name-svc-mh6ib2ntwq-uc.a.run.app/findEmployee/jo",
+					"protocol": "https",
+					"host": [
+						"name-svc-mh6ib2ntwq-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"findEmployee",
+						"jo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-prefs-local",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"firstName\": \"Johnny\",\n        \"lastName\": \"Glynnnn\",\n        \"preferredName\": \"jo-han-nnie\",\n        \"preferredPreset\": \"US-ROBOT-12\",\n        \"preferredSpeed\": 4,\n        \"active\": false\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/employeePreferences/John-Glynn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"employeePreferences",
+						"John-Glynn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "voice-GCP-preset",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://voice-svc-mh6ib2ntwq-uc.a.run.app/voice/johnny?preset=PRESET_2",
+					"protocol": "https",
+					"host": [
+						"voice-svc-mh6ib2ntwq-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"voice",
+						"johnny"
+					],
+					"query": [
+						{
+							"key": "preset",
+							"value": "PRESET_2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "voice-GCP-preset-speed",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://voice-svc-mh6ib2ntwq-uc.a.run.app/voice/johnny?preset=PRESET_2",
+					"protocol": "https",
+					"host": [
+						"voice-svc-mh6ib2ntwq-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"voice",
+						"johnny"
+					],
+					"query": [
+						{
+							"key": "preset",
+							"value": "PRESET_2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "voice-local-default",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/voice/johnny",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"voice",
+						"johnny"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "voice-local-preset",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/voice/johnny?preset=PRESET_3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"voice",
+						"johnny"
+					],
+					"query": [
+						{
+							"key": "preset",
+							"value": "PRESET_3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "voice-local-preset-speed",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/voice/johnny?preset=PRESET_3&rate=1.9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"voice",
+						"johnny"
+					],
+					"query": [
+						{
+							"key": "preset",
+							"value": "PRESET_3"
+						},
+						{
+							"key": "rate",
+							"value": "1.9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "voice-local-test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://voice-svc-mh6ib2ntwq-uc.a.run.app/test/johnny?language=en-US&voice=en-US-Wavenet-J&rate=1.9",
+					"protocol": "https",
+					"host": [
+						"voice-svc-mh6ib2ntwq-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"test",
+						"johnny"
+					],
+					"query": [
+						{
+							"key": "language",
+							"value": "en-US"
+						},
+						{
+							"key": "voice",
+							"value": "en-US-Wavenet-J"
+						},
+						{
+							"key": "rate",
+							"value": "1.9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "voice-test-GCP",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/test/johnny?language=en-US&voice=en-US-Wavenet-J&rate=1.9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"test",
+						"johnny"
+					],
+					"query": [
+						{
+							"key": "language",
+							"value": "en-US"
+						},
+						{
+							"key": "voice",
+							"value": "en-US-Wavenet-J"
+						},
+						{
+							"key": "rate",
+							"value": "1.9"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

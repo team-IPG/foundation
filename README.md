@@ -26,10 +26,13 @@ gcloud projects create $PROJECT_ID
 gcloud config set project $PROJECT_ID
 ```
 
-5. Enable Cloud Build, Cloud Run and Container Registry APIs
+5. Enable Cloud Build, Cloud Run, Container Registry, Text-to-Speech APIs
 
 ```
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com containerregistry.googleapis.com
+
+gcloud services enable texttospeech.googleapis.com
+
 ```
 
 6. Create a Google Cloud service account
@@ -48,7 +51,9 @@ gcloud iam service-accounts create $ACCOUNT_NAME \
 
     - `Storage Admin` - allow push to Google Container Registry (this grants project level access, but recommend reducing this scope to [bucket level permissions](https://cloud.google.com/container-registry/docs/access-control#grant).)
     
-    - `PubSub Editor -  allow topic and subscripton maintenance
+    - `PubSub Editor` -  allow topic and subscripton maintenance
+
+    - `Speech-to-Text` - convert names into audio (TODO)
 
 
 ```
@@ -81,9 +86,19 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 ```
 gcloud iam service-accounts keys create key.json \
     --iam-account $ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com
+    
+creates a key.json file
+
+Place in your user home directory: eg. /Users/john/key.json
 ```    
 
+9. Set environment variable
 
+```bash
+
+export GOOGLE_APPLICATION_CREDENTIALS=/Users/john/key.json
+
+```
 # cloud-run github setup
 
 [github action](https://github.com/google-github-actions/deploy-cloudrun)
