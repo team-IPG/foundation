@@ -1,43 +1,40 @@
 # foundation
-foundational artifacts and design materials for the platform
 
+foundational artifacts, scripts and design materials for the platform
 
-
-# gcp setup
+# GCP Setup
 
 1. Define project and service account names
 
-```
+```bash
 export PROJECT_ID=team-ipg-wf
 export ACCOUNT_NAME=ipg-service-account
 ```
 
-2. AUthenticate gcloud CLI
+2. Authenticate gcloud CLI
 
-```
+```bash
 gcloud auth login
 ```
 
 4.  Create a new Google Cloud Project (or select an existing project).
 
-```
+```bash
 gcloud projects create $PROJECT_ID
-
 gcloud config set project $PROJECT_ID
 ```
 
 5. Enable Cloud Build, Cloud Run, Container Registry, Text-to-Speech APIs
 
-```
-gcloud services enable cloudbuild.googleapis.com run.googleapis.com containerregistry.googleapis.com
-
-gcloud services enable texttospeech.googleapis.com
+```bash
+gcloud services enable cloudbuild.googleapis.com run.googleapis.com 
+gcloud services enable containerregistry.googleapis.com texttospeech.googleapis.com
 
 ```
 
 6. Create a Google Cloud service account
 
-```
+```bash
 gcloud iam service-accounts create $ACCOUNT_NAME \
   --description="Cloud Run deploy account" \
   --display-name="Cloud-Run-Deploy"
@@ -56,7 +53,7 @@ gcloud iam service-accounts create $ACCOUNT_NAME \
     - `Speech-to-Text` - convert names into audio (TODO)
 
 
-```
+```bash
 gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member=serviceAccount:$ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com \
   --role=roles/run.admin
@@ -82,14 +79,13 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 8.  Generate a JSON service account key  for the service account.
 
-
-```
+```bash
 gcloud iam service-accounts keys create key.json \
     --iam-account $ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com
     
-creates a key.json file
+# creates a key.json file
 
-Place in your user home directory: eg. /Users/john/key.json
+# Place in your user home directory: eg. /Users/john/key.json
 ```    
 
 9. Set environment variable
@@ -99,7 +95,7 @@ Place in your user home directory: eg. /Users/john/key.json
 export GOOGLE_APPLICATION_CREDENTIALS=/Users/john/key.json
 
 ```
-# cloud-run github setup
+# CICD Process using GitHub Action Workflow
 
 [github action](https://github.com/google-github-actions/deploy-cloudrun)
 
@@ -122,7 +118,7 @@ Add the following secrets to your repository's secrets:
 
 - `GCP_PROJECT`: Google Cloud project ID
 
-- `GCP_SA_KEY`: the downloaded service account key
+- `GCP_SA_KEY`: the downloaded service account key json
 
 ## Usage
 
