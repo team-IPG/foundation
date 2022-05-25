@@ -24,11 +24,12 @@ gcloud projects create $PROJECT_ID
 gcloud config set project $PROJECT_ID
 ```
 
-5. Enable Cloud Build, Cloud Run, Container Registry, Text-to-Speech APIs
+5. Enable Cloud Build, Cloud Run, Container Registry, Text-to-Speech APIs, Secrets mgmt
 
 ```bash
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com 
 gcloud services enable containerregistry.googleapis.com texttospeech.googleapis.com
+gcloud services enable secretmanager.googleapis.com
 
 ```
 
@@ -40,19 +41,24 @@ gcloud iam service-accounts create $ACCOUNT_NAME \
   --display-name="Cloud-Run-Deploy"
 ```
 
-7.  Add the the following [Cloud IAM roles][roles] to your service account:
+7. Create secret for DB service account
+
+```bash
+echo -n "cloud-sql-db-password" | \
+  gcloud secrets create employee-db-pwd --data-file=- --replication-policy=automatic
+  
+Created version [1] of the secret [employee-db-pwd]
+```
+
+8. Add the following [Cloud IAM roles][roles] to your service account:
 
     - `Cloud Run Admin` - allows for the creation of new Cloud Run services
-
     - `Service Account User` -  required to deploy to Cloud Run as service account
-
     - `Storage Admin` - allow push to Google Container Registry (this grants project level access, but recommend reducing this scope to [bucket level permissions](https://cloud.google.com/container-registry/docs/access-control#grant).)
-    
     - `PubSub Editor` -  allow topic and subscripton maintenance
-
-    - `Speech-to-Text` - convert names into audio (TODO)
-
-
+    - `Speech-to-Text` - convert names into audio
+    - `SecretAccessor` - access any secrets created in the Project
+    
 ```bash
 gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member=serviceAccount:$ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com \
@@ -75,9 +81,12 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member=serviceAccount:$ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com \
   --role=roles/cloudbuild.builds.builder
 
-```
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member=serviceAccount:$ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com \
+  --role=roles/secretmanager.secretAccessor
 
-8.  Generate a JSON service account key  for the service account.
+```
+9. Generate a JSON service account key  for the service account.
 
 ```bash
 gcloud iam service-accounts keys create key.json \
@@ -88,7 +97,7 @@ gcloud iam service-accounts keys create key.json \
 # Place in your user home directory: eg. /Users/john/key.json
 ```    
 
-9. Set environment variable
+10. Set environment variable (local development)
 
 ```bash
 
